@@ -30,6 +30,7 @@ IBM
 
 */
 const questions = [
+  //Repo Name
   {
     type: 'input',
     name: 'title',
@@ -43,6 +44,7 @@ const questions = [
       }
     }
   },
+  //Motivation 
   {
     type: 'input',
     name: 'motivation',
@@ -56,6 +58,7 @@ const questions = [
       }
     }
   },
+  //why build
   {
     type: 'input',
     name: 'whybuild',
@@ -69,6 +72,7 @@ const questions = [
       }
     }
   },
+  //what problem does this code solve
   {
     type: 'input',
     name: 'whatproblem',
@@ -82,23 +86,86 @@ const questions = [
       }
     }
   },
+  //what did you learn through coding this
   {
-  'What did you learn?'
+    type: 'input',
+    name: 'whatlearn',
+    message: 'What did you learn?',
+    validate: whatlearnInput => {
+      if(whatlearnInput){
+        return true;
+      } else {
+        console.log('you need a learning outcome');
+        return false;
+      }
+    }
+  },
+  //project features
+  {
+   type: 'input',
+   name: 'features',
+   message: 'What makes your project stand out?',
+   validate: featuresInput => {
+    if(featuresInput) {
+      return true;
+    } else {
+      console.log('you need features');
+      return false;
+    }
+   }
   },
   {
-  'What makes your project stand out?'
+    type: 'checkbox',
+    name: 'license',
+    message: 'What type of license do u want to use?',
+    choices: ['Apache', 'MIT', 'IBM'],
+    validate: licenseInput => {
+      if (licenseInput) {
+        return true;
+      } else {
+        console.log('a license is reqired')
+        return false;
+      }
+    }
   },
   {
-  'What type of license do u want to use?'
+    type: 'checkbox',
+    name: 'shield',
+    message: 'What will your Shield read? (From Shield.io)',
+    validate: shieldInput => {
+      if (shieldInput){
+        return true;
+      } else {
+        console.log('really? this just make pretty')
+        return false;
+      }
+    }
   },
   {
-    'What will your Shield read? (From Shield.io)'
+    type:'input',
+    name: 'credits',
+    message: 'Who do you owe Credits to?',
+    validate: creditsInput =>{
+      if (creditsInput){
+        return true;
+      } else {
+        console.log('man put that github you stole from here');
+        return false;
+      }
+    }
   },
   {
-    'Who do you owe Credits to?'
-  },
-  {
-    'What kind of usage does your program provide?'
+    type: 'input',
+    name: 'useage',
+    message: 'What kind of usage does your program provide?',
+    validate: useageInput => {
+      if (useageInput){
+        return true;
+      } else {
+        console.log('why are you posting useless code?');
+        return false;
+      }
+    }
   }
   ];
 
