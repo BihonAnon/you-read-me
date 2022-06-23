@@ -19,6 +19,7 @@ THEN I am taken to the corresponding section of the README
 // TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require('inquirer');
+const generateMarkdown = require('./utils/generateMarkdown.js')
 // TODO: Create an array of questions for user input
 /* License Tags TODO
 Apache
@@ -30,7 +31,7 @@ IBM
 
 */
 const questions = [
-  //Repo Name
+  //Repo Name ON
   {
     type: 'input',
     name: 'title',
@@ -44,7 +45,7 @@ const questions = [
       }
     }
   },
-  //Motivation 
+  //Motivation ON 
   {
     type: 'input',
     name: 'motivation',
@@ -58,7 +59,7 @@ const questions = [
       }
     }
   },
-  //why build
+  //why build ON
   {
     type: 'input',
     name: 'whybuild',
@@ -72,7 +73,7 @@ const questions = [
       }
     }
   },
-  //what problem does this code solve
+  //what problem does this code solve ON
   {
     type: 'input',
     name: 'whatproblem',
@@ -114,11 +115,12 @@ const questions = [
     }
    }
   },
+  //License Type
   {
     type: 'checkbox',
     name: 'license',
     message: 'What type of license do u want to use?',
-    choices: ['Apache', 'MIT', 'IBM'],
+    choices: ['[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)', '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)', '[![License: IPL 1.0](https://img.shields.io/badge/License-IPL%201.0-blue.svg)](https://opensource.org/licenses/IPL-1.0)', 'none'],
     validate: licenseInput => {
       if (licenseInput) {
         return true;
@@ -128,19 +130,21 @@ const questions = [
       }
     }
   },
-  {
-    type: 'checkbox',
-    name: 'shield',
-    message: 'What will your Shield read? (From Shield.io)',
-    validate: shieldInput => {
-      if (shieldInput){
-        return true;
-      } else {
-        console.log('really? this just make pretty')
-        return false;
-      }
-    }
-  },
+  // //Shield Scuffed
+  // {
+  //   type: 'checkbox',
+  //   name: 'shield',
+  //   message: 'What will your Shield read? (From Shield.io)',
+  //   validate: shieldInput => {
+  //     if (shieldInput){
+  //       return true;
+  //     } else {
+  //       console.log('really? this just make pretty')
+  //       return false;
+  //     }
+  //   }
+  // },
+  //Credits
   {
     type:'input',
     name: 'credits',
@@ -154,12 +158,13 @@ const questions = [
       }
     }
   },
+  //Useage
   {
     type: 'input',
-    name: 'useage',
+    name: 'usage',
     message: 'What kind of usage does your program provide?',
-    validate: useageInput => {
-      if (useageInput){
+    validate: usageInput => {
+      if (usageInput){
         return true;
       } else {
         console.log('why are you posting useless code?');
@@ -168,14 +173,22 @@ const questions = [
     }
   }
   ];
-
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-  
+  fs.writeFile(fileName, data, (err) => {
+    if (err)
+        throw err;
+    console.log('Success! Information transferred to the README!')
+});
 }
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+  inquirer.prompt(questions)
+  .then(function (userInput) {
+      console.log(userInput)
+      writeToFile("README.md", generateMarkdown(userInput));
+  });}
 
 // Function call to initialize app *when you are ceating your object*
-// init();
+init();
